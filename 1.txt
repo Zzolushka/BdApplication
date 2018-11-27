@@ -1,0 +1,34 @@
+drop database SketcherApplication;
+create database SketcherApplication;
+
+use SketcherApplication;
+
+create table Users(
+UserId int key auto_increment,
+UserName text,
+UserPassword text 
+);
+
+create table Sketches(
+SketchId int key auto_increment,
+SketchName text,
+SketchPhoto text,
+UserId int,
+foreign key (UserId) references Users(UserId) on delete cascade on update cascade
+);
+
+create table Comments(
+CommentId int key auto_increment,
+CommentDescription text,
+CommentTrueFalse bool,
+UserId int,
+SketchId int,
+foreign key (UserId) references Users(UserId) on delete cascade on update cascade,
+foreign key (SketchId) references Sketches(SketchId) on delete cascade on update cascade
+);
+
+select  from Comments;
+
+select  from Sketches;
+
+insert into Users value(1,'1','1');

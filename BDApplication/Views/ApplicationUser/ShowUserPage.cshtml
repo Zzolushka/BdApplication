@@ -1,0 +1,46 @@
+﻿@model BDApplication.Models.User
+
+@{
+    ViewBag.Title = "ShowUserPage";
+}
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <h3 class="text-center">Имя пользователя: @Model.UserName</h3>
+        <hr />
+    </div>    
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <img src="http://barabulki.ru/cs-go/Avatarka-40.jpg" style="width:100%" class="img-thumbnail"/>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        <h3> Дата регистрации:</h3>
+        2007.01.22
+    </div>
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+
+    </div>
+
+</div>
+<hr />
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+        @Html.ActionLink("Добавить запись","Create","Sketch", new { }, new { @class ="btn btn-success btn-block"})
+    </div>
+    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+        @foreach (var sketch in Model.Sketches)
+        {
+        <div class="card bg-light">
+            <div class="card-header ">Имечко: @sketch.SketchName</div>
+            <img class="card-img-bottom" src="https://wallpapercave.com/wp/wp2260439.jpg" />
+            <div class="card-body">
+                <h4 class="card-title">Light card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content</p>
+                @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { sketch.SketchId }, new { @class = "btn btn-success btn-block" })
+            </div>
+        </div>
+        <br />
+        }
+    </div>
+
+
+</div>
