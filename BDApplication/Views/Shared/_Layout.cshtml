@@ -7,7 +7,7 @@
     <title>@ViewBag.Title – приложение ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-</head>
+    <link href="/Content/countdownnormal.css" rel="stylesheet"></head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -25,10 +25,11 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                
+
                 @if (User.Identity.IsAuthenticated == true)
                 {
                     @Html.ActionLink("Моя страничка", "ShowUserPage", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Выйти", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
                 }
                 else
                 {
@@ -38,7 +39,7 @@
             </form>
         </div>
     </nav>
-    <div class="container" style="padding-top:20px">
+    <div class="container" style="padding-top:20px;font-family:'Countdown Normal', sans-serif">
         @RenderBody()
         <hr />
         <footer>

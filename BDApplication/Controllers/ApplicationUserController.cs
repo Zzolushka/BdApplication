@@ -42,7 +42,7 @@ namespace BDApplication.Controllers
         [HttpPost]
         public ActionResult Authorization(User user)
         {
-            var currentUser=sketcherContext.Users.Find(user);
+            var currentUser=sketcherContext.Users.FirstOrDefault(u=>u.UserId == user.UserId);
             if (currentUser != null)
             {
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
@@ -82,6 +82,12 @@ namespace BDApplication.Controllers
             var currentUser =  sketcherContext.Users.FirstOrDefault(u=>u.UserName==User.Identity.Name);
             ViewBag.UserName = User.Identity.Name;
             return View(currentUser);
+        }
+
+        public ActionResult Logoff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
 
