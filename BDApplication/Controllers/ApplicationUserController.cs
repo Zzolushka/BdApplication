@@ -27,6 +27,7 @@ namespace BDApplication.Controllers
         [HttpPost]
         public ActionResult Create(User user)
         {
+            user.UserPhotoPath = "https://res.cloudinary.com/djrk897te/image/upload/v1543826818/widgetdocs/user-default_jysqcc.png";
             sketcherContext.Users.Add(user);
             sketcherContext.SaveChanges();
             FormsAuthentication.SetAuthCookie(user.UserName, true);
@@ -79,7 +80,7 @@ namespace BDApplication.Controllers
         public ActionResult ShowUserPage()
         {
             var currentUser =  sketcherContext.Users.FirstOrDefault(u=>u.UserName==User.Identity.Name);
-           
+            ViewBag.UserName = User.Identity.Name;
             return View(currentUser);
         }
 

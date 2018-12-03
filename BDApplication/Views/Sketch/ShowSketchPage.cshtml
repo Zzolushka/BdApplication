@@ -4,37 +4,44 @@
     ViewBag.Title = "ShowSketchPage";
 }
 
-<h2>Имя рисунка: @Model.SketchName</h2>
 <hr />
-<div class="card bg-light">
-    <img class="card-img-bottom" src="https://wallpapercave.com/wp/wp2260439.jpg" />
-    <div class="card-body">
-        <h4 class="card-title">Light card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card bg-light">
+            <img class="card-img-bottom" src="@Model.SketchPhoto" />
+        </div>
     </div>
-</div>
-<hr />
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
-<script src="~/signalr/hubs"></script>
-<script>
-    var chat = $.connection.sketchPageHubs;
-    $.connection.hub.start().done(function () {
-    });
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chat = $.connection.sketchPageHubs;
+        $.connection.hub.start().done(function () {
+        });
+    </script>
 
-</script>
 
-<textarea class="form-control"></textarea>
-<button onclick="chat.server.sendCommnet('gaf',@Model.SketchId,@Model.UserId)" class="btn btn-success">
-    submit
-</button>
-<div id="comments">
-    @foreach (var comment in Model.Comments)
-    {   
-        <blockquote class="blockquote">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-        </blockquote>
-    }
+    <div id="comments" class="col-md-4">
+        <h2>commetns</h2>
+        <div class="input-group">
+            <br />
+            <input type="text" class="form-control input-group-append" id="committext" />
+            <button onclick="chat.server.sendCommnet($('#committext').val(),@Model.SketchId,@Model.UserId)" class="btn btn-success input-group-prepend">
+                commit
+            </button>
+        </div>
+        <hr />
+
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="card text-white bg-danger mb-3" style="width:100%">
+                <div class="card-header">@comment.User.UserName</div>
+                <div class="card-body">
+                    @comment.CommentDescription
+                </div>
+            </div>
+        }
+    </div>
 </div>

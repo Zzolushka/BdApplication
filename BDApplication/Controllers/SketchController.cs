@@ -27,11 +27,15 @@ namespace BDApplication.Controllers
             sketch.User = sketcherContext.Users.FirstOrDefault(u=>u.UserName==User.Identity.Name);
             sketcherContext.Sketches.Add(sketch);
             sketcherContext.SaveChanges();
-            return View();
+            return RedirectToAction("ShowUserPage","ApplicationUser");
         }
 
         public ActionResult ShowSketchPage(int sketchid)
         {
+            if(sketcherContext.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name)!=null)
+            {
+                ViewBag.userId = sketcherContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).UserId;
+            }
             var sketch = sketcherContext.Sketches.FirstOrDefault(s => s.SketchId == sketchid);
             return View(sketch);
         }

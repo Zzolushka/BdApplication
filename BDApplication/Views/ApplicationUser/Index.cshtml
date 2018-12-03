@@ -6,34 +6,21 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserPassword)
-        </th>
-        <th></th>
-    </tr>
+<hr />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserPassword)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
-        </td>
-    </tr>
-}
+<div class="row">
+    <div class="card-card-columns">
+        @foreach (var item in Model)
+        {
+        <div class="card">
+            <h3 class="card-header">@item.UserName</h3>
 
-</table>
+            <a id="upload_widget_opener"><img id="image" style=" width: 100%; display: block;" src="@item.UserPhotoPath" alt="Card image"></a>
+            @*<a href="#" id="upload_widget_opener" class="btn btn-default">Upload multiple images</a>*@
+            <div class="card-footer text-muted">
+                Online
+            </div>
+        </div>
+        }
+    </div>
+</div>

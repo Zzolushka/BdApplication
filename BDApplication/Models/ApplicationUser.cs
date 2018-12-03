@@ -13,6 +13,7 @@ namespace BDApplication.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string UserPassword { get; set; }
+        public string UserPhotoPath { get; set; }
 
         public virtual List<Sketch> Sketches { get; set; }
         public virtual List<Comment> Comments { get; set; }

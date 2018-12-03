@@ -4,43 +4,126 @@
     ViewBag.Title = "ShowUserPage";
 }
 
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        <h3 class="text-center">Имя пользователя: @Model.UserName</h3>
-        <hr />
-    </div>    
-    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-        <img src="http://barabulki.ru/cs-go/Avatarka-40.jpg" style="width:100%" class="img-thumbnail"/>
-    </div>
-    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-        <h3> Дата регистрации:</h3>
-        2007.01.22
-    </div>
-    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
 
-    </div>
+<div class="container">
+    <div class="row" style="padding-top: 20px">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <h3 class="card-header">@Model.UserName</h3>
 
-</div>
-<hr />
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-        @Html.ActionLink("Добавить запись","Create","Sketch", new { }, new { @class ="btn btn-success btn-block"})
-    </div>
-    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-        @foreach (var sketch in Model.Sketches)
-        {
-        <div class="card bg-light">
-            <div class="card-header ">Имечко: @sketch.SketchName</div>
-            <img class="card-img-bottom" src="https://wallpapercave.com/wp/wp2260439.jpg" />
-            <div class="card-body">
-                <h4 class="card-title">Light card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content</p>
-                @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { sketch.SketchId }, new { @class = "btn btn-success btn-block" })
+                <a id="upload_widget_opener"><img  id="image" style=" width: 100%; display: block;" src="@Model.UserPhotoPath" alt="Card image" ></a>
+                @*<a href="#" id="upload_widget_opener" class="btn btn-default">Upload multiple images</a>*@
+
+                
+                <div class="card-footer text-muted">
+                    Online
+                </div>
             </div>
         </div>
-        <br />
-        }
+        <div class="col-md-8">
+            <h2 class="text-center">Мои рисунки</h2>
+            <!-- <hr /> -->
+            <div style="padding-top: 20px">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Сортировка данных</h4>
+                        <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+                        <form>
+                            <div class="form-group">
+
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Search</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                        <div class="input-group-append">
+                                            <!--  <button class="btn btn-success">Поиск</button> -->
+                                        </div>
+
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Сортировка</span>
+                                        </div>
+                                        <select class="custom-select">
+                                            <option value="1">Отсортировать по названию</option>
+                                            <option value="2">Отсортировать по дате добавления</option>
+                                            <option value="3">Отсортировать по популярности</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center ">
+                                        <a class="btn btn-success text-light">По убыванию</a>
+                                        <a class="btn btn-danger text-light">По возрастанию</a>
+                                        @Html.ActionLink("Добавить запись", "Create", "Sketch", new { }, new { @class = "btn btn-primary" })
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @foreach (var sketch in Model.Sketches)
+            {
+                @*<div class="card bg-light">
+                        <div class="card-header ">Имечко: @sketch.SketchName</div>
+                        <img class="card-img-bottom" src="https://wallpapercave.com/wp/wp2260439.jpg" />
+                        <div class="card-body">
+                            <h4 class="card-title">Light card title</h4>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content</p>
+                            @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { sketch.SketchId }, new { @class = "btn btn-success btn-block" })
+                        </div>
+                    </div>
+                    <br />*@
+
+                <div style="padding-top: 20px">
+                    <div class="card mb-3">
+                        <h3 class="card-header ">@sketch.SketchName</h3>
+                        <img style=" width: 100%; display: block;" src="@sketch.SketchPhoto" alt="Card image">
+                        <div class="card-body">
+                          
+                            @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { sketch.SketchId }, new { @class = "card-link" })
+                        </div>
+                        <div class="card-footer text-muted">
+                            2 дня назад
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        </div>
     </div>
-
-
 </div>
+
+<script>
+    var chat = $.connection.userHubs;
+    $.connection.hub.start().done(function () {
+    });
+</script>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    var myUploadWidget;
+
+    $('#upload_widget_opener').on("click", function () {
+        cloudinary.openUploadWidget({
+                      cloudName: 'djrk897te', uploadPreset: 'uomwsjzr',
+                      cropping: 'server', folder: 'widgetdocs'
+        }, (error, result) => {
+            if (result.event === "success") {
+                chat.server.changePhotoPath(result.info.secure_url, '@ViewBag.UserName');
+                $("#image").attr("src", result.info.secure_url);
+                }
+            });
+    }); ;
+
+</script>

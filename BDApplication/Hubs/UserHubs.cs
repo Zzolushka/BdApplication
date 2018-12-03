@@ -7,12 +7,12 @@ using Microsoft.AspNet.SignalR;
 
 namespace BDApplication.Hubs
 {
-    public class SketchPageHubs : Hub
+    public class UserHubs : Hub
     {
-        public void SendCommnet(string description,int sketchid,int userid)
+        public void ChangePhotoPath(string url,string username)
         {
             SketcherContext sketcherContext = new SketcherContext();
-            sketcherContext.Comments.Add(new Comment { CommentDescription = description,SketchId=sketchid, UserId=userid});
+            sketcherContext.Users.FirstOrDefault(u => u.UserName == username).UserPhotoPath = url;
             sketcherContext.SaveChanges();
         }
     }
