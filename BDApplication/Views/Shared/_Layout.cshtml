@@ -10,7 +10,7 @@
     <link href="/Content/countdownnormal.css" rel="stylesheet"></head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <a class="navbar-brand" href="#">Navbar</a>
+        @Html.ActionLink("Sketcher", "Index", "Home", new { }, new { @class = "navbar-brand" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,28 +18,28 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Домашняя страница <span class="sr-only">(current)</span></a>
+                    @Html.ActionLink("Peaple", "Index", "ApplicationUser", new { }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item active">
-                    @Html.ActionLink("Люди","Index","ApplicationUser",new { },new {@class= "nav-link" })
+                    @Html.ActionLink("News", "News", "Home", new { }, new { @class = "nav-link" })
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
 
                 @if (User.Identity.IsAuthenticated == true)
                 {
-                    @Html.ActionLink("Моя страничка", "ShowUserPage", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
-                    @Html.ActionLink("Выйти", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("MyPage", "ShowUserPage", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Logoff", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
                 }
                 else
                 {
-                    @Html.ActionLink("Воити", "Authorization", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
-                    @Html.ActionLink("Зареггистрироваться", "Create", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("SignIn", "Authorization", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Registration", "Create", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
                 }
             </form>
         </div>
     </nav>
-    <div class="container" style="padding-top:20px;font-family:'Countdown Normal', sans-serif">
+    <div class="container" style="padding-top:20px">
         @RenderBody()
         <hr />
         <footer>

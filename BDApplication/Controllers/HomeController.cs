@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BDApplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,14 @@ namespace BDApplication.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            SketcherContext sketcherContext = new SketcherContext();
+            return View(sketcherContext.Sketches.Take(4));
+        }
+
+        public ActionResult News()
+        {
+            SketcherContext sketcherContext = new SketcherContext();
+            return View(sketcherContext.Sketches.Take(100));
         }
     }
 }

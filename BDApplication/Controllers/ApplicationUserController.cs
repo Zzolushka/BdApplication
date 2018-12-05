@@ -42,14 +42,17 @@ namespace BDApplication.Controllers
         [HttpPost]
         public ActionResult Authorization(User user)
         {
-            var currentUser=sketcherContext.Users.FirstOrDefault(u=>u.UserId == user.UserId);
-            if (currentUser != null)
+            if (sketcherContext.Users.FirstOrDefault(u => u.UserName == user.UserName) != null)
             {
+                var currentUser = sketcherContext.Users.FirstOrDefault(u => u.UserId == user.UserId);
+                    
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
-                return RedirectToAction("Index");
+                return RedirectToAction("ShowUserPage");
             }
             else
+            {
                 return View();
+            }
         }
 
         [HttpGet]
