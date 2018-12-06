@@ -15,10 +15,25 @@ namespace BDApplication.Controllers
             return View(sketcherContext.Sketches.Take(4));
         }
 
+        [HttpGet]
         public ActionResult News()
         {
             SketcherContext sketcherContext = new SketcherContext();
             return View(sketcherContext.Sketches.Take(100));
+        }
+
+        [HttpPost]
+        public ActionResult News(string searchtext)
+        {
+            SketcherContext sketcherContext = new SketcherContext();
+
+            List<Sketch> sketches = new List<Sketch>();
+            
+            if (!String.IsNullOrEmpty(searchtext))
+            { 
+                sketches = sketcherContext.Sketches.Where(s => s.SketchName.Contains(searchtext)).ToList();
+            }
+          return View(sketches);
         }
     }
 }

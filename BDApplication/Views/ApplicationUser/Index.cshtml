@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Peaples</h2>
 
 <hr />
 
@@ -12,7 +12,7 @@
     <div class="card-columns">
         @foreach (var item in Model)
         {
-        <div class="card">
+        <div class="card md-4">
             <h3 class="card-header">@item.UserName</h3>
 
             <a id="upload_widget_opener"><img id="image" style=" width: 100%; display: block;" src="@item.UserPhotoPath" alt="Card image"></a>
