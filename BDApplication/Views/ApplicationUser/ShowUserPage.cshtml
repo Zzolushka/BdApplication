@@ -97,7 +97,7 @@
     <div class="col-md-8">
 
         <h1 class="my-4">
-            Sketches
+            Рисуночки
         </h1>
 
         @foreach (var item in Model.Sketches)
@@ -110,7 +110,7 @@
                     @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { item.SketchId }, new { @class = "card-link" })
                 </div>
                 <div class="card-footer text-muted">
-                    Posted on January 1, 2017 by
+                    Дата
                 </div>
             </div>
         }
@@ -144,15 +144,16 @@
         </div>
 
         <div class="card my-4">
-            <h5 class="card-header">Changes</h5>
+            <h5 class="card-header">Редактирование страницы</h5>
             <div class="card-body">
                 <div class="col-lg-12 col-md-12">
+                   
                     <ul class="list-unstyled mb-0">
                         <li>
-                            @Html.ActionLink("Add sketch", "Create", "Sketch", new { }, new { @class = "" })
+                            @Html.ActionLink("Добавить пост", "Create", "Sketch", new { }, new { @class = "btn btn-success btn-block" })
                         </li>
                         <li>
-                            <a href="#">Change Password</a>
+                            @Html.ActionLink("Сменить пароль", "ChangePassword", "ApplicationUser", new { }, new { @class = "btn btn-block btn-warning" })
                         </li>
                     </ul>
                 </div>
@@ -164,7 +165,7 @@
 
 
         <div class="card my-4">
-            <h5 class="card-header">Sorting</h5>
+            <h5 class="card-header">Сортировка</h5>
             <div class="card-body">
                 <div class="input-group">
                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
@@ -179,12 +180,12 @@
 
         <!-- Search Widget -->
         <div class="card my-4">
-            <h5 class="card-header">Search</h5>
+            <h5 class="card-header">Поиск</h5>
             <div class="card-body">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" placeholder="Введи че-нить">
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button">Go!</button>
+                        <button class="btn btn-secondary" type="button">Искать</button>
                     </span>
                 </div>
             </div>

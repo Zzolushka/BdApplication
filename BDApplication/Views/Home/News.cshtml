@@ -10,8 +10,7 @@
         <div class="col-md-8">
 
             <h1 class="my-4">
-                News
-                <small>Special for you</small>
+                Лента новостей
             </h1>
 
             @foreach (var item in Model)
@@ -24,7 +23,7 @@
                         @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { item.SketchId }, new { @class = "card-link" })
                     </div>
                     <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
+                        Дата
                     </div>
                 </div>
             }
@@ -33,10 +32,10 @@
             <!-- Pagination -->
             <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
-                    <a class="page-link" href="#">&larr; Older</a>
+                    <a class="page-link" href="#">&larr; Предыдущая</a>
                 </li>
                 <li class="page-item disabled">
-                    <a class="page-link" href="#">Newer &rarr;</a>
+                    <a class="page-link" href="#">Следующая &rarr;</a>
                 </li>
             </ul>
 
@@ -48,31 +47,31 @@
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Search</h5>
+                <h5 class="card-header">Поиск</h5>
                 <div class="card-body">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for..." id="searchtext" name="searchtext">
+                        <input type="text" class="form-control" placeholder="Введите че-нить" id="searchtext" name="searchtext">
                         <span class="input-group-btn">
-                            <input class="btn btn-secondary" type="submit" value="search" />
+                            <input class="btn btn-secondary" type="submit" value="Искать" />
                         </span>
                     </div>
                 </div>
             </div>
             <!-- Categories Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Categories</h5>
+                <h5 class="card-header">Категории</h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">Peaple</a>
+                                    <a href="#">Портреты</a>
                                 </li>
                                 <li>
-                                    <a href="#">Art</a>
+                                    <a href="#">Арты</a>
                                 </li>
                                 <li>
-                                    <a href="#">Wallpaper</a>
+                                    <a href="#">Природа</a>
                                 </li>
                             </ul>
                         </div>
@@ -95,9 +94,9 @@
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
+                <h5 class="card-header">Реклама</h5>
                 <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                   Тута реклама
                 </div>
             </div>
 
