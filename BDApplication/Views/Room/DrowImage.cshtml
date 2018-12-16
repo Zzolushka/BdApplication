@@ -1,0 +1,273 @@
+﻿@{
+    /**/
+    Layout = null;
+
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <title></title>
+    <style>
+
+        canvas {
+            position: relative;
+            /*background-color: #ffffff;*/
+        }
+
+        .btnsettings {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+    @Styles.Render("~/Content/css")
+</head>
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        @Html.ActionLink("Рисовальщик", "Index", "Home", new { }, new { @class = "navbar-brand" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    @Html.ActionLink("Пользователи", "Index", "ApplicationUser", new { }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item active">
+                    @Html.ActionLink("Новости", "News", "Home", new { }, new { @class = "nav-link" })
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+
+                @if (User.Identity.IsAuthenticated == true)
+                {
+                    @Html.ActionLink("Моя страничка", "ShowUserPage", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Выйти", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                }
+                else
+                {
+                    @Html.ActionLink("Войти", "Authorization", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Зарегистрироваться", "Create", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                }
+            </form>
+        </div>
+    </nav>
+
+
+
+    <button type="submit" class="btn btn-secondary btnsize btnsettings" value="5"><i style="font-size:large" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btnsize btnsettings" value="4"><i style="font-size:larger" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btnsize btnsettings" value="3"><i style="font-size:medium" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btnsize btnsettings" value="2"><i style="font-size:small" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btnsize btnsettings" style="background-color:#008000" value="1"><i style="font-size:smaller" class="glyphicon glyphicon-pencil"></i></button></li>
+
+
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" value="#090909"><i style="font-size:medium; color:#090909" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" value="#2aebeb"><i style="font-size:medium; color:#2aebeb" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" value="#026021"><i style="font-size:medium; color:#026021" class="fas fa-pen"></i></button>
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" style="background-color:#008000" value="#ffb504"><i style="font-size:medium; color:#ffb504" class="glyphicon glyphicon-pencil"></i></button></li>
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" value="#fc2507"><i style="font-size:medium; color:#fc2507" class="glyphicon glyphicon-pencil"></i></button>
+
+
+
+
+
+    <button type="submit" class="btn btn-secondary btncolor btnsettings" value="null"><i style="font-size:medium" class="glyphicon glyphicon-erase"></i></button>
+
+
+
+    @* <li><button class="btn btn-secondary" style="font-size:large">Назад</button></li>*@
+    <a href="@Url.Action("ShowAllRooms", "Home")" class="btn btn-secondary btncolor btnsettings" style="font-size:large;width:100px" role="button">Назад</a>
+    @*<li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>*@
+
+    <form name="MainForm" method="post">
+        <canvas id='drawingpad' width='1024' height='768' style="border-width:10px"></canvas>
+
+        <input type="hidden" id="imgsrc">
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <!--Ссылка на библиотеку SignalR -->
+        <script src="~/Scripts/jquery.signalR-2.4.0.js"></script>
+        <!--Ссылка на автоматически сгенерированный скрипт хаба SignalR -->
+        <script src="/signalr/hubs"></script>
+        @*<input type="submit" value="gaf" formaction="@Url.Action("SaveImage", "home")">*@
+
+        <script>
+
+            $('docunment').ready(function () {
+
+                var pensize = 1;
+                var pencolor = "#FF0000";
+
+
+
+
+                $(".btnsize").click(function () {
+                    $(".btnsize").css('background-color', '#FFFFFF')
+                    pensize = $(this).val();
+                    $(this).css('background-color', '#008000');
+                });
+
+                $(".btncolor").click(function () {
+
+                    $(".btncolor").css('background-color', '#FFFFFF')
+                    pencolor = $(this).val();
+                    $(this).css('background-color', '#008000');
+                })
+
+                var drawGame = {
+                    // указывает, происходит ли отрисовка
+                    isDrawing: false,
+                    // начальная точка следующей линии
+                    startX: 0,
+                    startY: 0,
+                };
+                // модель линий
+                var data = {
+                    startX: 0,
+                    startY: 0,
+                    endX: 0,
+                    endY: 0,
+                    size: 0,
+                    color: ""
+                };
+
+                // контекст элемента canvas
+
+                var canvas = document.getElementById('drawingpad');
+                var ctx = canvas.getContext('2d');
+                var img = new Image();
+                img.src = "@ViewBag.image";
+
+
+                img.addEventListener("load", function () {
+                    ctx.drawImage(img, 0, 0)
+                }, false)
+
+
+
+                // Ссылка на автоматически-сгенерированный прокси хаба
+                var chat = $.connection.drawHub;
+
+
+
+
+                // Объявление функции, которая хаб вызывает при получении сообщений
+                chat.client.addLine = function (data) {
+
+                    // Добавление линий
+                    drawLine(ctx, data.startX, data.startY, data.endX, data.endY, data.size, data.color);
+                };
+
+                // Открываем соединение
+                $.connection.hub.start().done(function () {
+                    // после открытия соединения устанавливаем обработчики мыши
+                    chat.server.joinGroup("@ViewBag.id");
+
+                    canvas.addEventListener("mousedown", mousedown, false);
+                    canvas.addEventListener("mousemove", mousemove, false);
+                    canvas.addEventListener("mouseup", mouseup, false);
+
+                });
+                // просто рисуем линию
+                function drawLine(ctx, x1, y1, x2, y2, size ,color) {
+                    ctx.beginPath();
+                    if (color == "null") {
+                        ctx.globalCompositeOperation = "destination-out";
+                    }
+
+
+
+                    if (color != "null") {
+                        ctx.globalCompositeOperation = "source-over";
+                    }
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.lineWidth = size;
+                    ctx.strokeStyle = color;
+                    ctx.stroke();
+
+                }
+                // нажите мыши
+                function mousedown(e) {
+
+                    // получаем позиции x и y относительно верхнего левого угла элемента canvas
+                    var mouseX = e.layerX || 0;
+                    var mouseY = e.layerY || 0;
+                    drawGame.startX = mouseX;
+                    drawGame.startY = mouseY;
+
+                    drawGame.isDrawing = true;
+                };
+
+                // перемещение мыши
+                function mousemove(e) {
+
+                    // рисуем линию, если isdrawing==true
+                    if (drawGame.isDrawing) {
+
+                        // получаем позиции x и y относительно верхнего левого угла элемента canvas
+                        var mouseX = e.layerX || 0;
+                        var mouseY = e.layerY || 0;
+                        if (!(mouseX == drawGame.startX &&
+                            mouseY == drawGame.startY)) {
+                            drawLine(ctx, drawGame.startX,
+                                drawGame.startY, mouseX, mouseY, pensize, pencolor);
+
+                            data.startX = drawGame.startX;
+                            data.startY = drawGame.startY;
+                            data.endX = mouseX;
+                            data.endY = mouseY;
+                            data.size = pensize;
+                            data.color = pencolor;
+                            chat.server.send("@ViewBag.id", data);
+
+
+
+
+
+
+
+                            @*var image = getImage(canvas);
+                            chat.server.saveImage("@ViewBag.id", image.src);*@
+
+
+                            //var path = canvas.src;
+
+
+
+
+                            drawGame.startX = mouseX;
+                            drawGame.startY = mouseY;
+                        }
+                    }
+                };
+
+                function mouseup(e) {
+                    drawGame.isDrawing = false;
+                }
+
+                function getImage(ctx) {
+                    var imageData = ctx.toDataURL();
+                    var image = new Image();
+                    image.src = imageData;
+                    return image;
+                };
+
+                $('canvas').mouseup(function () {
+                    var image = getImage(canvas);
+                    chat.server.saveImage("@ViewBag.id", canvas.toDataURL());
+
+                });
+            });
+
+
+        </script>
+        @Scripts.Render("~/bundles/bootstrap")
+    </form>
+</body>
+</html>

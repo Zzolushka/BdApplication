@@ -25,6 +25,8 @@ namespace BDApplication.Models
         public int SketchId { get; set; }
         public string SketchName { get; set; }
         public string SketchPhoto { get; set; }
+        public DateTime SketchDate { get; set; }
+        public string SketchCategory { get; set; }
 
         public int? UserId { get; set; }
         public User User { get; set; }
@@ -57,5 +59,6 @@ namespace BDApplication.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Sketch> Sketches { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Room> Rooms { get; set; }
     }
 }

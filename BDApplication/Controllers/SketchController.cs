@@ -22,9 +22,11 @@ namespace BDApplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Sketch sketch)
+        public ActionResult Create(Sketch sketch,string category)
         {
             sketch.User = sketcherContext.Users.FirstOrDefault(u=>u.UserName==User.Identity.Name);
+            sketch.SketchDate = DateTime.Now;
+            sketch.SketchCategory = category;
             sketcherContext.Sketches.Add(sketch);
             sketcherContext.SaveChanges();
             return RedirectToAction("ShowUserPage","ApplicationUser");
@@ -40,12 +42,13 @@ namespace BDApplication.Controllers
             return View(sketch);
         }
 
-
-
-
-
-        
-
+        public ActionResult Delete(int sketchid)
+        {
+            var currentsketch = sketcherContext.Sketches.FirstOrDefault(s => s.SketchId == sketchid);
+            sketcherContext.Sketches.Remove(currentsketch);
+            sketcherContext.SaveChanges();
+            return RedirectToAction("ShowUserPage","ApplicationUser");
+        }
 
     }
 }

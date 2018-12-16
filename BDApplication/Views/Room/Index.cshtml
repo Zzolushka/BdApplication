@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BDApplication.Models.Room>
+
+
+
+<script src="/Scripts/jquery-3.0.0.min.js"></script>
+<!--Ссылка на библиотеку SignalR -->
+<script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<!--Ссылка на автоматически сгенерированный скрипт хаба SignalR -->
+<script src="/signalr/hubs"></script>
+
+
+
+<div>
+
+    <a href="@Url.Action("AddRoom")" class="btn btn-primary center-block" role="button">Добавить</a>
+</div>
+
+
+
+
+@foreach (var item in Model)
+{
+
+
+    <div class="col-md-12">
+        <div class="thumbnail">
+            @*<img src="@item.Image">*@
+            <div class="caption">
+                <div class="text-center text">
+                    <input id="@item.Id" type="submit" class="form-control center-block" value="@item.Name">
+                </div>
+
+                <a href="@Url.Action("DeleteRoom", "Room", new {id = Convert.ToInt16(item.Id) })" class="btn btn-primary left" role="button">Удалить</a>
+                <a href="@Url.Action("DrowImage", "Room", new {id = Convert.ToInt16(item.Id) })" class="btn btn-primary left" role="button">Перейти</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-columns">
+        @foreach (var item in Model)
+        {
+            <div class="card md-4">
+                <h3 class="card-header">@item.UserName</h3>
+
+                <a id="upload_widget_opener"><img id="image" style=" width: 100%; display: block;" src="@item.UserPhotoPath" alt="Card image"></a>
+                @*<a href="#" id="upload_widget_opener" class="btn btn-default">Upload multiple images</a>*@
+                <div class="card-footer text-muted">
+                    Online
+                </div>
+            </div>
+        }
+
+        }
+
+
+        <script>
+            $('document').ready(function () {
+                var chat = $.connection.drawHub;
+                $.connection.hub.start().done(function () {
+
+
+
+                });
+
+
+                $('input').click(function () {
+
+                    name = prompt('Введите имя', '');
+                    chat.server.changeName($(this).attr('id'), name);
+                    $(this).val(name);
+                });
+            });
+        </script>
+
+
+
+

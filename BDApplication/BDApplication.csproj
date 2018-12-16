@@ -187,13 +187,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ApplicationUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SketchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\DrawHub.cs" />
     <Compile Include="Hubs\UserHubs.cs" />
     <Compile Include="Hubs\SketchPageHubs.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Data.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -285,6 +288,8 @@
     <Content Include="Views\ApplicationUser\ShowUserPage.cshtml" />
     <Content Include="Views\Sketch\ShowSketchPage.cshtml" />
     <Content Include="Views\Home\News.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Room\DrowImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
