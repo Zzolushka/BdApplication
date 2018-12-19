@@ -23,13 +23,16 @@
                 <li class="nav-item active">
                     @Html.ActionLink("Новости", "News", "Home", new { }, new { @class = "nav-link" })
                 </li>
+                <li class="nav-item active">
+                    @Html.ActionLink("Комнаты", "Index", "Room", new { }, new { @class = "nav-link" })
+                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
 
                 @if (User.Identity.IsAuthenticated == true)
                 {
                     @Html.ActionLink("Моя страничка", "ShowUserPage", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
-                    @Html.ActionLink("Выйти", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" })
+                    @Html.ActionLink("Выйти", "Logoff", "ApplicationUser", new { }, new { @class = "nav-link text-light" }) 
                 }
                 else
                 {

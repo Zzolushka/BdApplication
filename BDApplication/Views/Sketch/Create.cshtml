@@ -7,6 +7,7 @@
 <h2 class="text-center">Добавить пост</h2>
 <br />
 
+<form method="post">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -31,12 +32,12 @@
             </div>*@
         <div class="col-md-6">
             @*<div class="form-group">
-                @Html.LabelFor(model => model.SketchName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SketchName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SketchName, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+            @Html.LabelFor(model => model.SketchName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SketchName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SketchName, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
             <div class="form-group row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Имя</label>
@@ -46,9 +47,23 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Категория</label>
+                <div class="col-sm-10 text">
+                    <select id="category" class="custom-select" name="category">
+                        <option>Природа</option>
+                        <option>Портреты</option>
+                        <option>Натюрморты</option>
+                        <option>Бурятские мультики</option>
+                        <option>Игры</option>
+                        <option>Фэнтези</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Добавить" class="btn btn-default" />
+                <div class="col-md-12 col-lg-12">
+                    <input type="submit" value="Добавить" class="btn btn-success btn-block" />
                 </div>
             </div>
         </div>
@@ -88,3 +103,4 @@
     @*@Html.ActionLink("Back to List", "Index")*@
 </div>
 
+</form>

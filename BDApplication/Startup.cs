@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using Microsoft.AspNet.SignalR;
+using Microsoft.Owin;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace BDApplication
     {
         public void Configuration(IAppBuilder app)
         {
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
             app.MapSignalR();
         }
     }
