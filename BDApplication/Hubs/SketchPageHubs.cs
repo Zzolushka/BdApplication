@@ -12,7 +12,7 @@ namespace BDApplication.Hubs
         public void SendCommnet(string description,int sketchid,int userid)
         {
             SketcherContext sketcherContext = new SketcherContext();
-            sketcherContext.Comments.Add(new Comment { CommentDescription = description,SketchId=sketchid, UserId=userid});
+            sketcherContext.Users.FirstOrDefault(u => u.UserId == userid).Comments.Add(new Comment { CommentDescription = description, SketchId = sketchid });
             sketcherContext.SaveChanges();
         }
     }

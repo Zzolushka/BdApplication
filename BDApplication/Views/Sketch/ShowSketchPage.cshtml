@@ -6,42 +6,58 @@
 
 <hr />
 
-<div class="row">
-    <div class="col-md-8">
+
         <div class="card bg-light">
-            <img class="card-img-bottom" src="@Model.SketchPhoto" />
+            <div class="card-body">
+                <img class="card-img-bottom" src="@Model.SketchPhoto" />
+            </div>
         </div>
-    </div>
+
 
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script>
+
+        function print() {
+            $(".comments").append("<div class='card text-white bg-light text-dark mb-3' style='width:100%'><div class='card-header'>@ViewBag.UserName</div><div class='card-body'>" + $("#committext").val()+"</div></div>");
+        }
+
         var chat = $.connection.sketchPageHubs;
         $.connection.hub.start().done(function () {
         });
     </script>
+    
+    
 
-
-    <div id="comments" class="col-md-4">
-        <h2>commetns</h2>
-        <div class="input-group">
-            <br />
-            <input type="text" class="form-control input-group-append" id="committext" />
-            <button onclick="chat.server.sendCommnet($('#committext').val(),@Model.SketchId,@Model.UserId)" class="btn btn-success input-group-prepend">
-                commit
-            </button>
-        </div>
-        <hr />
-
-        @foreach (var comment in Model.Comments)
-        {
-            <div class="card text-white bg-danger mb-3" style="width:100%">
-                <div class="card-header">@comment.User.UserName</div>
-                <div class="card-body">
-                    @comment.CommentDescription
+    <br />
+    <hr />
+    
+    <div class="row">
+        <div class="col-md-2 col-lg-2"></div>
+        <div class="col-md-8 col-lg-8">
+            <div class="comments">
+                <h2>Комментарии</h2>
+                <div class="input-group" style="width:100%">
+                    <br />
+                    <input type="text" class="form-control" id="committext"/>
+                    <div class="input-group-btn">
+                        <button onclick="chat.server.sendCommnet($('#committext').val(),@Model.SketchId,@ViewBag.UserId); print()" class="btn btn-success">
+                            Прокоментировать
+                        </button>
+                    </div>
                 </div>
+                <hr />
+
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="card text-white bg-light text-dark mb-3" style="width:100%">
+                        <div class="card-header">@comment.User.UserName</div>
+                        <div class="card-body">
+                            @comment.CommentDescription
+                        </div>
+                    </div>
+                }
             </div>
-        }
+        </div>
     </div>
-</div>

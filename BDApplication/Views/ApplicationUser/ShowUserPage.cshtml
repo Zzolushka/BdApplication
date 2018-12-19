@@ -97,8 +97,26 @@
     <div class="col-md-8">
 
         <h1 class="my-4">
+            Шапка
+        </h1>
+
+
+        @foreach (var item in Model.Rooms)
+        {
+            <!-- Blog Post -->
+            <div class="card mb-4">
+
+                <img class="card-img-top" src="@item.Image" alt="Card image cap">
+                <div class="card-body">
+                    @Html.ActionLink("Перейти запись", "DrowImage", "Room", new { item.Id}, new { @class = "card-link" })
+                </div>
+            </div>
+        }
+
+        <h1 class="my-4">
             Рисуночки
         </h1>
+
 
         @foreach (var item in Model.Sketches)
         {
@@ -157,6 +175,8 @@
             </div>
         </div>
 
+
+
         <div class="card my-4">
             <h5 class="card-header">Редактирование страницы</h5>
             <div class="card-body">
@@ -164,11 +184,11 @@
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            @Html.ActionLink("Добавить пост", "Create", "Sketch", new { }, new { @class = "btn btn-success btn-block" })
+                            @Html.ActionLink("Добавить пост", "Create", "Sketch", new { }, new { @class = "btn btn-default btn-block" })
                         </li>
-                        <li>
-                            @Html.ActionLink("Сменить пароль", "ChangePassword", "ApplicationUser", new { }, new { @class = "btn btn-block btn-warning" })
-                        </li>
+                        @*<li>
+                            @Html.ActionLink("Сменить пароль", "ChangePassword", "ApplicationUser", new { }, new { @class = "btn btn-block default" })
+                        </li>*@
                     </ul>
                 </div>
             </div>

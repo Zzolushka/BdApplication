@@ -37,8 +37,9 @@ namespace BDApplication.Controllers
             if(sketcherContext.Users.FirstOrDefault(u=>u.UserName == User.Identity.Name)!=null)
             {
                 ViewBag.userId = sketcherContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).UserId;
+                ViewBag.UserName = sketcherContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name).UserName;
             }
-            var sketch = sketcherContext.Sketches.FirstOrDefault(s => s.SketchId == sketchid);
+            var sketch = sketcherContext.Sketches.Include("User").FirstOrDefault(s => s.SketchId == sketchid);
             return View(sketch);
         }
 

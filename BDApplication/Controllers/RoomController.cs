@@ -23,7 +23,7 @@ namespace BDApplication.Controllers
             using (SketcherContext db = new SketcherContext())
             {
 
-                Room newRoom = new Room() { Image = "", Name = "New Room", Id = rnd.Next(0, 100) };
+                Room newRoom = new Room() { Image = "https://res.cloudinary.com/djrk897te/image/upload/v1535048158/2_vhpsaw.jpg", Name = "New Room", Id = rnd.Next(0, 100) };
                 db.Rooms.Add(newRoom);
                 db.SaveChanges();
                 return RedirectToAction("Index");

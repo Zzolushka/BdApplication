@@ -17,6 +17,7 @@ namespace BDApplication.Models
 
         public virtual List<Sketch> Sketches { get; set; }
         public virtual List<Comment> Comments { get; set; }
+        public virtual List<Room> Rooms { get; set; }
     }
 
     public class Sketch

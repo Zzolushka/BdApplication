@@ -27,8 +27,11 @@ namespace BDApplication.Controllers
         [HttpPost]
         public ActionResult Create(User user)
         {
+            Random rnd = new Random();
             user.UserPhotoPath = "https://res.cloudinary.com/djrk897te/image/upload/v1543826818/widgetdocs/user-default_jysqcc.png";
             sketcherContext.Users.Add(user);
+            sketcherContext.SaveChanges();
+            sketcherContext.Rooms.Add(new Room() { Image = "", Name = "New Room", Id = rnd.Next(0, 100) ,UserId=user.UserId});
             sketcherContext.SaveChanges();
             FormsAuthentication.SetAuthCookie(user.UserName, true);
             return RedirectToAction("Index");
