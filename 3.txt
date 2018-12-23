@@ -29,13 +29,7 @@ foreign key (SketchId) references Sketches(SketchId) on delete cascade on update
 
 drop table Rooms;
 
-create table Rooms(
-Id int key auto_increment,
-Name text,
-Image longblob,
-UserId int,
-foreign key (UserId) references Users(UserId) on delete cascade on update cascade
-);
+
 
 select * from Rooms;
 
