@@ -6,13 +6,16 @@ use SketcherApplication;
 create table Users(
 UserId int key auto_increment,
 UserName text,
-UserPassword text 
+UserPassword text,
+UserPhotoPath text
 );
 
 create table Sketches(
 SketchId int key auto_increment,
 SketchName text,
 SketchPhoto text,
+SketchDate date,
+SketchCategory text,
 UserId int,
 foreign key (UserId) references Users(UserId) on delete cascade on update cascade
 );
@@ -27,8 +30,18 @@ foreign key (UserId) references Users(UserId) on delete cascade on update cascad
 foreign key (SketchId) references Sketches(SketchId) on delete cascade on update cascade
 );
 
-select  from Comments;
+create table Rooms(
+Id int key auto_increment,
+Name text,
+Image longblob,
+UserId int,
+foreign key (UserId) references Users(UserId) on delete cascade on update cascade
+);
 
-select  from Sketches;
-
-insert into Users value(1,'1','1');
+create table Likes(
+LikesId int key auto_increment,
+CommentId int,
+UserId int,
+foreign key (CommentId) references Comments(CommentId) on delete cascade on update cascade,
+foreign key (UserId) references Users(UserId) on delete cascade on update cascade
+);

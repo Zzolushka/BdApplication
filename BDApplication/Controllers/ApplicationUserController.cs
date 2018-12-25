@@ -28,13 +28,34 @@ namespace BDApplication.Controllers
         public ActionResult Create(User user)
         {
             Random rnd = new Random();
-            user.UserPhotoPath = "https://res.cloudinary.com/djrk897te/image/upload/v1543826818/widgetdocs/user-default_jysqcc.png";
-            sketcherContext.Users.Add(user);
-            sketcherContext.SaveChanges();
-            sketcherContext.Rooms.Add(new Room() { Image = "", Name = "New Room", Id = rnd.Next(0, 100) ,UserId=user.UserId});
-            sketcherContext.SaveChanges();
-            FormsAuthentication.SetAuthCookie(user.UserName, true);
-            return RedirectToAction("Index");
+            if(user.UserName==null || user.UserPassword== null)
+            {
+                if(user.UserName == null)
+                {
+                    ModelState.AddModelError("UserName", "Введите имя пользователя");
+                }
+                else
+                {
+                    ModelState.AddModelError("UserPassword", "Введите пароль пользователя");
+                }
+                return View();
+            }
+            else 
+            if (sketcherContext.Users.FirstOrDefault(u => u.UserName == user.UserName) == null)
+            {
+                user.UserPhotoPath = "https://res.cloudinary.com/djrk897te/image/upload/v1543826818/widgetdocs/user-default_jysqcc.png";
+                sketcherContext.Users.Add(user);
+                sketcherContext.SaveChanges();
+                sketcherContext.Rooms.Add(new Room() { Image = "", Name = "New Room", Id = rnd.Next(0, 100), UserId = user.UserId });
+                sketcherContext.SaveChanges();
+                FormsAuthentication.SetAuthCookie(user.UserName, true);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("UserName","Такой пользователь уже есть");
+                return View();
+            }
         }
 
         public ActionResult Authorization()
@@ -47,13 +68,19 @@ namespace BDApplication.Controllers
         {
             if (sketcherContext.Users.FirstOrDefault(u => u.UserName == user.UserName) != null)
             {
-                var currentUser = sketcherContext.Users.FirstOrDefault(u => u.UserId == user.UserId);
-                    
+                if(user.UserPassword!=sketcherContext.Users.FirstOrDefault(u => u.UserName == user.UserName).UserPassword)
+                {
+                    ModelState.AddModelError("UserPassword", "Неверный пароль");
+                    return View();
+                }
+
+
                 FormsAuthentication.SetAuthCookie(user.UserName, true);
                 return RedirectToAction("ShowUserPage");
             }
             else
             {
+                ModelState.AddModelError("UserName", "Нету такого пользователя");
                 return View();
             }
         }
@@ -82,11 +109,56 @@ namespace BDApplication.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         [Authorize]
         public ActionResult ShowUserPage()
         {
             var currentUser =  sketcherContext.Users.FirstOrDefault(u=>u.UserName==User.Identity.Name);
+            var sketches = sketcherContext.Sketches.Where(s => s.UserId == currentUser.UserId);
+            ViewBag.sketches = sketches;
             ViewBag.UserName = User.Identity.Name;
+            return View(currentUser);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ShowUserPage(FormCollection collection, string orderby)
+        {
+            var currentUser = sketcherContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            ViewBag.UserName = User.Identity.Name;
+
+            string searchtext = collection["searchtext"];
+
+            List<Sketch> sketches = new List<Sketch>();
+
+            if (!String.IsNullOrEmpty(collection["searchtext"]))
+            {
+                sketches = sketcherContext.Sketches.Where(s => s.UserId==currentUser.UserId).Where(s => s.SketchName.Contains(searchtext)).ToList();
+            }
+            else
+            {
+                sketches = sketcherContext.Sketches.Where(s => s.UserId == currentUser.UserId).ToList();
+            }
+
+
+
+            switch (orderby)
+            {
+                case "1":
+                    sketches = sketches.OrderBy(s => s.SketchDate).ToList();
+                    break;
+                case "2":
+                    sketches = sketches.OrderBy(s => s.SketchName).ToList();
+                    break;
+                case "3":
+                    sketches = sketches.OrderBy(s => s.SketchCategory).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            ViewBag.sketches = sketches;
+
             return View(currentUser);
         }
 

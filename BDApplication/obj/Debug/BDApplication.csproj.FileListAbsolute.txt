@@ -593,3 +593,11 @@ C:\Users\Kirusha\Desktop\BdApplication\BDApplication\obj\Debug\BDApplication.csp
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\obj\Debug\BDApplication.csproj.CopyComplete
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\obj\Debug\BDApplication.dll
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\obj\Debug\BDApplication.pdb
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.dll
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.Mvc.dll
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\X.PagedList.dll
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\X.PagedList.Mvc.dll
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.xml
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.Mvc.xml
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.Core.resources.dll
+C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.SystemWeb.resources.dll

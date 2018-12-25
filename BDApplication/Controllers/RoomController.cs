@@ -33,7 +33,7 @@ namespace BDApplication.Controllers
 
         public ActionResult DrowImage(int id)
         {
-            if (id != 0 && id != null)
+            if (id != 0 )
             {
                 ViewBag.id = id;
 
@@ -49,6 +49,8 @@ namespace BDApplication.Controllers
             else
                 return RedirectToAction("Index");
         }
+
+        
 
 
     }

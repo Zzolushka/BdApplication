@@ -1,9 +1,12 @@
-﻿@model IEnumerable<BDApplication.Models.Sketch>
+﻿
+@model IEnumerable<BDApplication.Models.Sketch>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "News";
 }
-<form method="post">
+@using (Html.BeginForm("News", "Home", FormMethod.Post))
+{
     <div class="row">
 
         <!-- Blog Entries Column -->
@@ -23,21 +26,23 @@
                         @Html.ActionLink("Просмотреть запись", "ShowSketchPage", "Sketch", new { item.SketchId }, new { @class = "card-link" })
                     </div>
                     <div class="card-footer text-muted">
-                        Дата
+                        @item.SketchDate
+                        <span class="badge badge-success pull-right float-lg-right float-sm-right float-xl-right float-md-right">@item.SketchCategory</span>
                     </div>
                 </div>
             }
 
+
             <!-- Blog Post -->
             <!-- Pagination -->
-            <ul class="pagination justify-content-center mb-4">
-                <li class="page-item">
-                    <a class="page-link" href="#">&larr; Предыдущая</a>
-                </li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="#">Следующая &rarr;</a>
-                </li>
-            </ul>
+            @*<ul class="pagination justify-content-center mb-4">
+                    <li class="page-item">
+                        <a class="page-link" href="#">&larr; Предыдущая</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Следующая &rarr;</a>
+                    </li>
+                </ul>*@
 
         </div>
 
@@ -47,25 +52,32 @@
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Поиск</h5>
+                <h5 class="card-header">Сортировка записей</h5>
                 <div class="card-body">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Введите че-нить" id="searchtext" name="searchtext">
-                        <span class="input-group-btn">
-                            <input class="btn btn-secondary" type="submit" value="Искать" />
-                        </span>
+
+                    <select class="custom-select " name="orderby">
+                        <option value="1">Отсортировать по дате</option>
+                        <option value="2">Отсортировать по имени</option>
+                        <option value="3">Отсортировать по категориям</option>
+                    </select>
+
+
+                    <div class="form-inline my-2 my-lg-0" style="padding-top:10px">
+
+                        <input class="form-control mr-sm-2" type="text" placeholder="Данные для поиска" name="searchtext">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Искать</button>
                     </div>
                 </div>
             </div>
             <!-- Categories Widget -->
-            <div class="card my-4">
+            @*<div class="card my-4">
                 <h5 class="card-header">Категории</h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">Портреты</a>
+                                    @Html.ActionLink("Природа", "News", "Home", new { searchcategory = "Природа" }, new { @class = "card-link"} )
                                 </li>
                                 <li>
                                     <a href="#">Арты</a>
@@ -90,17 +102,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
             <!-- Side Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Реклама</h5>
                 <div class="card-body">
-                   Тута реклама
+                    Тута реклама
                 </div>
             </div>
 
         </div>
 
     </div>
-</form>
+}
