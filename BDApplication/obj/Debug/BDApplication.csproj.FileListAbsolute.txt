@@ -601,3 +601,11 @@ C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.xml
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\PagedList.Mvc.xml
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.Core.resources.dll
 C:\Users\Kirusha\Desktop\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.SystemWeb.resources.dll
+D:\Projects\BdApplication\BDApplication\bin\PagedList.dll
+D:\Projects\BdApplication\BDApplication\bin\PagedList.Mvc.dll
+D:\Projects\BdApplication\BDApplication\bin\X.PagedList.dll
+D:\Projects\BdApplication\BDApplication\bin\X.PagedList.Mvc.dll
+D:\Projects\BdApplication\BDApplication\bin\PagedList.xml
+D:\Projects\BdApplication\BDApplication\bin\PagedList.Mvc.xml
+D:\Projects\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.Core.resources.dll
+D:\Projects\BdApplication\BDApplication\bin\ru\Microsoft.AspNet.SignalR.SystemWeb.resources.dll
